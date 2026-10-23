@@ -37,4 +37,4 @@ Todo o texto fica em [`src/data/content.ts`](src/data/content.ts). O que é igua
 
 ## Deploy na Vercel
 
-O deploy é feito na Vercel: [portfolio-brian-ashihara.vercel.app](https://portfolio-brian-ashihara.vercel.app)
+O deploy está feito na Vercel.
