@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0c0a09;
+  --color-surface: #171311;
+  --color-surface-2: #1f1915;
+  --color-line: rgb(255 236 220 / 0.09);
+  --color-fg: #f5efe9;
+  --color-muted: #a3968a;
+  --color-accent: #ff8a3d;
+  --color-accent-soft: #ffb547;
+  --color-warm: #ff8a3d;
+  --color-amber: #ffb547;
+  --color-glow: #ffd8a8;
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+
+
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(255 138 61 / 0.35);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-accent), var(--color-accent-soft));
+    border-radius: 99px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-warm);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Hover padrão dos cards: sobe um pouco e clareia a borda, com transição longa e suave */
+@utility card-hover {
+  transition:
+    translate 0.7s var(--ease-smooth),
+    border-color 0.7s var(--ease-smooth),
+    background-color 0.7s var(--ease-smooth),
+    box-shadow 0.7s var(--ease-smooth);
+
+  &:hover {
+    translate: 0 -4px;
+    border-color: rgb(255 255 255 / 0.14);
+    box-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* Logo "BA": borda fina em degradê (sem fundo) que acende no hover */
+.logo-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--color-glow), var(--color-accent-soft) 50%, var(--color-accent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  transition: opacity 0.6s var(--ease-smooth);
+}
+
+.logo-ring {
+  transition: box-shadow 0.6s var(--ease-smooth);
+}
+
+.logo-ring:hover {
+  box-shadow: 0 0 24px -4px rgb(255 138 61 / 0.5);
+}
+
+.logo-ring:hover::before {
+  opacity: 1;
+}
+
+@utility text-gradient {
+  background: linear-gradient(110deg, var(--color-warm) 0%, var(--color-amber) 50%, var(--color-warm) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+
+/* Degradê do nome aplicado letra a letra: cada letra mostra a sua fatia (--x) de um degradê
+   do tamanho da palavra (--word-w). Assim o degradê continua certo mesmo com as letras se mexendo. */
+.letter-gradient {
+  background-image: linear-gradient(100deg, var(--color-warm) 0%, var(--color-amber) 100%);
+  background-size: var(--word-w, 100%) 100%;
+  background-position: calc(var(--x, 0px) * -1) 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes shine {
+  to { background-position: -200% center; }
+}
+
+
+/* Grão de ruído por cima de tudo */
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+
+/* Borda com gradiente girando (cards em destaque e foto) */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.border-spin {
+  position: relative;
+  isolation: isolate;
+}
+
+.border-spin::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--angle), transparent 0%, var(--color-accent) 15%, var(--color-glow) 30%, transparent 45%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate-angle 5s linear infinite;
+}
+
+@keyframes rotate-angle {
+  to { --angle: 360deg; }
+}
+
+/* Spotlight que segue o mouse nos cards (usa --mx/--my definidos pelo SpotlightCard) */
+.spotlight {
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(255 138 61 / 0.07), transparent 45%);
+}
+
+.spotlight-border {
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgb(255 138 61 / 0.5), transparent 50%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+
+/* Com "reduzir movimento" ligado, para as animações automáticas em loop.
+   Transições de hover continuam, porque só acontecem quando o usuário interage. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
