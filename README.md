@@ -1,4 +1,4 @@
-# Brian Ashihara · Portfólio
+# Brian Ashihara - Portfólio
 
 **Site:** [portfolio-brian-ashihara.vercel.app](https://portfolio-brian-ashihara.vercel.app)
 
