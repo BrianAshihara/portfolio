@@ -23,6 +23,7 @@ npm run dev      # http://localhost:3000
 Todo o texto fica em [`src/data/content.ts`](src/data/content.ts). O que é igual nos dois idiomas (nome, links, foto, ícones e tags) fica em `shared`, `socials`, `stacks` e `projectBase`; os textos ficam em `pt` e `en`. A ordem de `projectBase` é a ordem dos cards.
 
 - **Foto:** `public/me.jpg` (a moldura usa a proporção 3:4).
+- **Currículo:** `public/cv/Brian-Ashihara-Curriculo.pdf` (PT) e `public/cv/Brian-Ashihara-Resume.pdf` (EN). O botão da navbar baixa o PDF do idioma ativo; para trocar, substitua o arquivo mantendo o nome ou ajuste `nav.resumeFile` em `content.ts`.
 - **Idioma:** português é o padrão. O botão PT/EN da navbar troca o idioma, e a escolha fica salva no navegador do visitante.
 
 ## Efeitos

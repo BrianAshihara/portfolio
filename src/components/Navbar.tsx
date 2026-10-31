@@ -2,10 +2,14 @@
 
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { content, languages } from "@/data/content";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import { LanguageToggle } from "./LanguageToggle";
+
+const resumeButton =
+  "inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs whitespace-nowrap text-fg transition-colors duration-500 hover:border-accent hover:bg-white/15 sm:text-sm";
 
 export function Navbar() {
   const lenis = useLenis();
@@ -101,6 +105,20 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <LanguageToggle />
+            {/* Reserva a largura do maior texto entre os idiomas: ao trocar de idioma o botão
+                cresce/encolhe para a direita e o seletor PT/EN não sai de baixo do cursor. */}
+            <div className="grid justify-items-start">
+              {languages.map((option) => (
+                <span key={option.id} aria-hidden className={`${resumeButton} invisible [grid-area:1/1]`}>
+                  {content[option.id].nav.resume}
+                  <Download size={14} />
+                </span>
+              ))}
+              <a href={t.nav.resumeFile} download className={`${resumeButton} group [grid-area:1/1]`}>
+                {t.nav.resume}
+                <Download size={14} className="transition-transform duration-500 ease-smooth group-hover:translate-y-0.5" />
+              </a>
+            </div>
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? t.nav.closeMenu : t.nav.openMenu}

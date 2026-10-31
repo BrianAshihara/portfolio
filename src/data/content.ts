@@ -132,6 +132,9 @@ const pt = {
     openMenu: "Abrir menu",
     closeMenu: "Fechar menu",
     language: "Idioma",
+    resume: "Baixar CV",
+    // PDF em /public/cv. O nome do arquivo é o que a pessoa recebe ao baixar.
+    resumeFile: "/cv/Brian-Ashihara-Curriculo.pdf",
   },
   hero: {
     roleLine: "Desenvolvedor Full Stack Júnior",
@@ -241,6 +244,8 @@ const en: SiteContent = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     language: "Language",
+    resume: "Download CV",
+    resumeFile: "/cv/Brian-Ashihara-Resume.pdf",
   },
   hero: {
     roleLine: "Junior Full Stack Developer",
